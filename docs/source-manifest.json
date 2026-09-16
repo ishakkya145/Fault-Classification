@@ -1,0 +1,31 @@
+{
+  "selected_by_author": "2026-09-16",
+  "sources": [
+    {
+      "source_workspace_relative": "Model Training/IEEE 14 bus system/14_Bus_Final/Training/Updated_14_Bus/IEEE_14_Final.slx",
+      "repository_path": "simulation/IEEE_14_Final.slx",
+      "source_sha256": "5d7782727e22ea9215b5c9a3c1ca6f98174103bc5aa11b7fb7ab2dfaa48f0f8b",
+      "note": "Copied unchanged."
+    },
+    {
+      "source_workspace_relative": "Model Training/IEEE 14 bus system/14_Bus_Final/Training/Updated_14_Bus/Gen_20.m",
+      "repository_path": "simulation/generate_dataset.m",
+      "source_sha256": "ef25822d251bd679577aa3aa5de35c373f8dbae495ec877ccfc17fe75c455347",
+      "note": "Copied unchanged initially; generator path and output naming adapted for repository use."
+    },
+    {
+      "source_workspace_relative": "Model Outputs/Model_04._Laxapana - Colab.pdf",
+      "repository_path": "docs/archive/model_04_laxapana.pdf",
+      "source_sha256": "5f0ae30ecfbc02e8a1c09f3db892dd43d31a15cb982bd1f3926c2fd4d0e1139d",
+      "note": "Copied unchanged."
+    },
+    {
+      "source_url": "https://colab.research.google.com/drive/1PDTpz4ldBI_ZPMiWIZBGzQL8Q1W2mTEB",
+      "downloaded_filename": "Model_04 (1).ipynb",
+      "retrieved": "2026-09-16",
+      "source_sha256": "cdb6b21e047723a1537d5452322f98b6c47b5ea10801b52baebcce4354c42b16",
+      "repository_path": "notebooks/model_04.ipynb",
+      "note": "Original code cells retained exactly; introductory markdown added; outputs and execution metadata cleared; text outputs archived separately."
+    }
+  ]
+}

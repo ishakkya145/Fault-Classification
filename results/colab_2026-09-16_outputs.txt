@@ -1,0 +1,411 @@
+=== Source cell 1 ===
+TensorFlow version: 2.19.0
+Mounted at /content/drive
+Extracting dataset...
+Extraction completed.
+MAT files found: 2000
+Dataset path: /content/IEEE14_2000
+
+
+=== Source cell 3 ===
+IEEE14_2000: (2000, 1201, 8); channels: ['Va', 'Vb', 'Vc', 'Ia', 'Ib', 'Ic', 'V0', 'I0']
+Label map: {'AB': 0, 'BC': 1, 'AC': 2, 'AG': 3, 'BG': 4, 'CG': 5, 'ABG': 6, 'BCG': 7, 'ACG': 8, 'ABC': 9, 'ABCG': 10}
+Train: 1280 samples (64.0%), 1280 simulations
+Validation: 320 samples (16.0%), 320 simulations
+Test: 400 samples (20.0%), 400 simulations
+       Train  Validation  Test
+Class
+AB       122          30    38
+BC       107          27    34
+AC       117          29    37
+AG       110          28    34
+BG       120          30    38
+CG       120          30    37
+ABG      114          29    35
+BCG      114          28    36
+ACG      120          30    37
+ABC      107          27    34
+ABCG     129          32    40
+Checks passed: no exact duplicate inputs; disjoint parsed simulation IDs.
+Normalization fitted on training samples only.
+ABC: median training RMS [V0, I0] = [8.58514623e-07 2.31954179e-07]
+ABCG: median training RMS [V0, I0] = [0.00508876 0.02813707]
+
+
+=== Source cell 5 ===
+[1mModel: "Stable_3CNN_BiLSTM"[0m
+
+
+=== Source cell 5 ===
+┏━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃[1m [0m[1mLayer (type)       [0m[1m [0m┃[1m [0m[1mOutput Shape     [0m[1m [0m┃[1m [0m[1m   Param #[0m[1m [0m┃[1m [0m[1mConnected to     [0m[1m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│ input_signal        │ ([38;5;45mNone[0m, [38;5;34m1201[0m, [38;5;34m8[0m)   │          [38;5;34m0[0m │ -                 │
+│ ([38;5;33mInputLayer[0m)        │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ conv1 ([38;5;33mConv1D[0m)      │ ([38;5;45mNone[0m, [38;5;34m1201[0m, [38;5;34m32[0m)  │      [38;5;34m2,336[0m │ input_signal[[38;5;34m0[0m][[38;5;34m…[0m │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ bn1                 │ ([38;5;45mNone[0m, [38;5;34m1201[0m, [38;5;34m32[0m)  │        [38;5;34m128[0m │ conv1[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mBatchNormalizatio…[0m │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ pool1               │ ([38;5;45mNone[0m, [38;5;34m600[0m, [38;5;34m32[0m)   │          [38;5;34m0[0m │ bn1[[38;5;34m0[0m][[38;5;34m0[0m]         │
+│ ([38;5;33mMaxPooling1D[0m)      │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ spatial_dropout1    │ ([38;5;45mNone[0m, [38;5;34m600[0m, [38;5;34m32[0m)   │          [38;5;34m0[0m │ pool1[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mSpatialDropout1D[0m)  │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ conv2 ([38;5;33mConv1D[0m)      │ ([38;5;45mNone[0m, [38;5;34m600[0m, [38;5;34m48[0m)   │     [38;5;34m10,800[0m │ spatial_dropout1… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ bn2                 │ ([38;5;45mNone[0m, [38;5;34m600[0m, [38;5;34m48[0m)   │        [38;5;34m192[0m │ conv2[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mBatchNormalizatio…[0m │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ pool2               │ ([38;5;45mNone[0m, [38;5;34m300[0m, [38;5;34m48[0m)   │          [38;5;34m0[0m │ bn2[[38;5;34m0[0m][[38;5;34m0[0m]         │
+│ ([38;5;33mMaxPooling1D[0m)      │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ spatial_dropout2    │ ([38;5;45mNone[0m, [38;5;34m300[0m, [38;5;34m48[0m)   │          [38;5;34m0[0m │ pool2[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mSpatialDropout1D[0m)  │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ conv3 ([38;5;33mConv1D[0m)      │ ([38;5;45mNone[0m, [38;5;34m300[0m, [38;5;34m64[0m)   │     [38;5;34m15,424[0m │ spatial_dropout2… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ bn3                 │ ([38;5;45mNone[0m, [38;5;34m300[0m, [38;5;34m64[0m)   │        [38;5;34m256[0m │ conv3[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mBatchNormalizatio…[0m │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ pool3               │ ([38;5;45mNone[0m, [38;5;34m150[0m, [38;5;34m64[0m)   │          [38;5;34m0[0m │ bn3[[38;5;34m0[0m][[38;5;34m0[0m]         │
+│ ([38;5;33mMaxPooling1D[0m)      │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ spatial_dropout3    │ ([38;5;45mNone[0m, [38;5;34m150[0m, [38;5;34m64[0m)   │          [38;5;34m0[0m │ pool3[[38;5;34m0[0m][[38;5;34m0[0m]       │
+│ ([38;5;33mSpatialDropout1D[0m)  │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ bilstm              │ ([38;5;45mNone[0m, [38;5;34m150[0m, [38;5;34m96[0m)   │     [38;5;34m43,392[0m │ spatial_dropout3… │
+│ ([38;5;33mBidirectional[0m)     │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ global_average_poo… │ ([38;5;45mNone[0m, [38;5;34m96[0m)        │          [38;5;34m0[0m │ bilstm[[38;5;34m0[0m][[38;5;34m0[0m]      │
+│ ([38;5;33mGlobalAveragePool…[0m │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ global_max_pooling… │ ([38;5;45mNone[0m, [38;5;34m96[0m)        │          [38;5;34m0[0m │ bilstm[[38;5;34m0[0m][[38;5;34m0[0m]      │
+│ ([38;5;33mGlobalMaxPooling1…[0m │                   │            │                   │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ concatenate         │ ([38;5;45mNone[0m, [38;5;34m192[0m)       │          [38;5;34m0[0m │ global_average_p… │
+│ ([38;5;33mConcatenate[0m)       │                   │            │ global_max_pooli… │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ dense ([38;5;33mDense[0m)       │ ([38;5;45mNone[0m, [38;5;34m64[0m)        │     [38;5;34m12,352[0m │ concatenate[[38;5;34m0[0m][[38;5;34m0[0m] │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ dropout ([38;5;33mDropout[0m)   │ ([38;5;45mNone[0m, [38;5;34m64[0m)        │          [38;5;34m0[0m │ dense[[38;5;34m0[0m][[38;5;34m0[0m]       │
+├─────────────────────┼───────────────────┼────────────┼───────────────────┤
+│ dense_1 ([38;5;33mDense[0m)     │ ([38;5;45mNone[0m, [38;5;34m11[0m)        │        [38;5;34m715[0m │ dropout[[38;5;34m0[0m][[38;5;34m0[0m]     │
+└─────────────────────┴───────────────────┴────────────┴───────────────────┘
+
+
+=== Source cell 5 ===
+[1m Total params: [0m[38;5;34m85,595[0m (334.36 KB)
+
+
+=== Source cell 5 ===
+[1m Trainable params: [0m[38;5;34m85,307[0m (333.23 KB)
+
+
+=== Source cell 5 ===
+[1m Non-trainable params: [0m[38;5;34m288[0m (1.12 KB)
+
+
+=== Source cell 5 ===
+Epoch 1/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 550ms/step - accuracy: 0.0852 - loss: 2.5394
+Epoch 1: val_loss improved from None to 2.42910, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 1: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m23s[0m 750ms/step - accuracy: 0.1070 - loss: 2.4851 - val_accuracy: 0.1156 - val_loss: 2.4291 - learning_rate: 5.0000e-04
+Epoch 2/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 726ms/step - accuracy: 0.1449 - loss: 2.4136
+Epoch 2: val_loss improved from 2.42910 to 2.40362, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 2: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 843ms/step - accuracy: 0.1562 - loss: 2.3947 - val_accuracy: 0.2156 - val_loss: 2.4036 - learning_rate: 5.0000e-04
+Epoch 3/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 562ms/step - accuracy: 0.1952 - loss: 2.3291
+Epoch 3: val_loss improved from 2.40362 to 2.34573, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 3: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m6s[0m 639ms/step - accuracy: 0.2000 - loss: 2.3175 - val_accuracy: 0.4406 - val_loss: 2.3457 - learning_rate: 5.0000e-04
+Epoch 4/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 658ms/step - accuracy: 0.2598 - loss: 2.2411
+Epoch 4: val_loss improved from 2.34573 to 2.25392, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 4: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 772ms/step - accuracy: 0.2805 - loss: 2.2196 - val_accuracy: 0.6406 - val_loss: 2.2539 - learning_rate: 5.0000e-04
+Epoch 5/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 569ms/step - accuracy: 0.3385 - loss: 2.1149
+Epoch 5: val_loss improved from 2.25392 to 2.14116, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 5: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 645ms/step - accuracy: 0.3664 - loss: 2.0931 - val_accuracy: 0.5344 - val_loss: 2.1412 - learning_rate: 5.0000e-04
+Epoch 6/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 658ms/step - accuracy: 0.4231 - loss: 2.0181
+Epoch 6: val_loss improved from 2.14116 to 1.99817, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 6: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 823ms/step - accuracy: 0.4367 - loss: 1.9848 - val_accuracy: 0.6094 - val_loss: 1.9982 - learning_rate: 5.0000e-04
+Epoch 7/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 548ms/step - accuracy: 0.4996 - loss: 1.8463
+Epoch 7: val_loss improved from 1.99817 to 1.81688, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 7: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m6s[0m 625ms/step - accuracy: 0.5227 - loss: 1.8064 - val_accuracy: 0.6313 - val_loss: 1.8169 - learning_rate: 5.0000e-04
+Epoch 8/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 646ms/step - accuracy: 0.5655 - loss: 1.6923
+Epoch 8: val_loss improved from 1.81688 to 1.62284, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 8: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 757ms/step - accuracy: 0.5625 - loss: 1.6521 - val_accuracy: 0.6438 - val_loss: 1.6228 - learning_rate: 5.0000e-04
+Epoch 9/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 549ms/step - accuracy: 0.6084 - loss: 1.5060
+Epoch 9: val_loss improved from 1.62284 to 1.41467, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 9: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m9s[0m 626ms/step - accuracy: 0.6164 - loss: 1.4695 - val_accuracy: 0.6562 - val_loss: 1.4147 - learning_rate: 5.0000e-04
+Epoch 10/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 742ms/step - accuracy: 0.6866 - loss: 1.3146
+Epoch 10: val_loss improved from 1.41467 to 1.20490, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 10: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 819ms/step - accuracy: 0.6883 - loss: 1.2915 - val_accuracy: 0.6906 - val_loss: 1.2049 - learning_rate: 5.0000e-04
+Epoch 11/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 556ms/step - accuracy: 0.7045 - loss: 1.1801
+Epoch 11: val_loss improved from 1.20490 to 0.98768, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 11: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m6s[0m 642ms/step - accuracy: 0.7266 - loss: 1.1229 - val_accuracy: 0.7719 - val_loss: 0.9877 - learning_rate: 5.0000e-04
+Epoch 12/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 1s/step - accuracy: 0.7580 - loss: 1.0459
+Epoch 12: val_loss improved from 0.98768 to 0.82932, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 12: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m13s[0m 1s/step - accuracy: 0.7641 - loss: 1.0052 - val_accuracy: 0.7875 - val_loss: 0.8293 - learning_rate: 5.0000e-04
+Epoch 13/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 635ms/step - accuracy: 0.7779 - loss: 0.9165
+Epoch 13: val_loss improved from 0.82932 to 0.67193, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 13: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 747ms/step - accuracy: 0.7930 - loss: 0.8757 - val_accuracy: 0.8469 - val_loss: 0.6719 - learning_rate: 5.0000e-04
+Epoch 14/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 586ms/step - accuracy: 0.8231 - loss: 0.7742
+Epoch 14: val_loss improved from 0.67193 to 0.52203, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 14: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 672ms/step - accuracy: 0.8305 - loss: 0.7486 - val_accuracy: 0.9000 - val_loss: 0.5220 - learning_rate: 5.0000e-04
+Epoch 15/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 596ms/step - accuracy: 0.8673 - loss: 0.6564
+Epoch 15: val_loss improved from 0.52203 to 0.42422, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 15: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 705ms/step - accuracy: 0.8703 - loss: 0.6459 - val_accuracy: 0.9125 - val_loss: 0.4242 - learning_rate: 5.0000e-04
+Epoch 16/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 563ms/step - accuracy: 0.8700 - loss: 0.5963
+Epoch 16: val_loss improved from 0.42422 to 0.34985, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 16: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m10s[0m 644ms/step - accuracy: 0.8875 - loss: 0.5684 - val_accuracy: 0.9187 - val_loss: 0.3499 - learning_rate: 5.0000e-04
+Epoch 17/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 744ms/step - accuracy: 0.8943 - loss: 0.5249
+Epoch 17: val_loss improved from 0.34985 to 0.28127, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 17: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 822ms/step - accuracy: 0.9125 - loss: 0.5029 - val_accuracy: 0.9531 - val_loss: 0.2813 - learning_rate: 5.0000e-04
+Epoch 18/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 557ms/step - accuracy: 0.9245 - loss: 0.4296
+Epoch 18: val_loss improved from 0.28127 to 0.22450, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 18: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m6s[0m 635ms/step - accuracy: 0.9250 - loss: 0.4276 - val_accuracy: 0.9688 - val_loss: 0.2245 - learning_rate: 5.0000e-04
+Epoch 19/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 725ms/step - accuracy: 0.9207 - loss: 0.4173
+Epoch 19: val_loss improved from 0.22450 to 0.19702, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 19: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 802ms/step - accuracy: 0.9242 - loss: 0.3995 - val_accuracy: 0.9781 - val_loss: 0.1970 - learning_rate: 5.0000e-04
+Epoch 20/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 551ms/step - accuracy: 0.9460 - loss: 0.3616
+Epoch 20: val_loss improved from 0.19702 to 0.15904, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 20: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m6s[0m 628ms/step - accuracy: 0.9461 - loss: 0.3526 - val_accuracy: 0.9906 - val_loss: 0.1590 - learning_rate: 5.0000e-04
+Epoch 21/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 593ms/step - accuracy: 0.9441 - loss: 0.3362
+Epoch 21: val_loss improved from 0.15904 to 0.13438, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 21: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m11s[0m 671ms/step - accuracy: 0.9422 - loss: 0.3324 - val_accuracy: 0.9937 - val_loss: 0.1344 - learning_rate: 5.0000e-04
+Epoch 22/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 699ms/step - accuracy: 0.9546 - loss: 0.2925
+Epoch 22: val_loss improved from 0.13438 to 0.11838, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 22: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 811ms/step - accuracy: 0.9563 - loss: 0.2902 - val_accuracy: 0.9937 - val_loss: 0.1184 - learning_rate: 5.0000e-04
+Epoch 23/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 543ms/step - accuracy: 0.9599 - loss: 0.2872
+Epoch 23: val_loss improved from 0.11838 to 0.10450, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 23: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m9s[0m 618ms/step - accuracy: 0.9586 - loss: 0.2797 - val_accuracy: 0.9937 - val_loss: 0.1045 - learning_rate: 5.0000e-04
+Epoch 24/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 738ms/step - accuracy: 0.9763 - loss: 0.2456
+Epoch 24: val_loss improved from 0.10450 to 0.09614, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 24: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 817ms/step - accuracy: 0.9703 - loss: 0.2413 - val_accuracy: 0.9937 - val_loss: 0.0961 - learning_rate: 5.0000e-04
+Epoch 25/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 567ms/step - accuracy: 0.9668 - loss: 0.2271
+Epoch 25: val_loss improved from 0.09614 to 0.08541, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 25: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m9s[0m 645ms/step - accuracy: 0.9703 - loss: 0.2161 - val_accuracy: 0.9937 - val_loss: 0.0854 - learning_rate: 5.0000e-04
+Epoch 26/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 713ms/step - accuracy: 0.9730 - loss: 0.2005
+Epoch 26: val_loss improved from 0.08541 to 0.07695, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 26: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m8s[0m 788ms/step - accuracy: 0.9781 - loss: 0.1949 - val_accuracy: 0.9937 - val_loss: 0.0769 - learning_rate: 5.0000e-04
+Epoch 27/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 597ms/step - accuracy: 0.9738 - loss: 0.2034
+Epoch 27: val_loss improved from 0.07695 to 0.07297, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 27: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m9s[0m 701ms/step - accuracy: 0.9766 - loss: 0.1944 - val_accuracy: 0.9937 - val_loss: 0.0730 - learning_rate: 5.0000e-04
+Epoch 28/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 610ms/step - accuracy: 0.9764 - loss: 0.1853
+Epoch 28: val_loss improved from 0.07297 to 0.06587, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 28: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 687ms/step - accuracy: 0.9773 - loss: 0.1855 - val_accuracy: 1.0000 - val_loss: 0.0659 - learning_rate: 5.0000e-04
+Epoch 29/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 578ms/step - accuracy: 0.9744 - loss: 0.1903
+Epoch 29: val_loss improved from 0.06587 to 0.06242, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 29: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m7s[0m 742ms/step - accuracy: 0.9766 - loss: 0.1857 - val_accuracy: 1.0000 - val_loss: 0.0624 - learning_rate: 5.0000e-04
+Epoch 30/30
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 547ms/step - accuracy: 0.9674 - loss: 0.1826
+Epoch 30: val_loss improved from 0.06242 to 0.06103, saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+
+Epoch 30: finished saving model to cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+[1m10/10[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m9s[0m 625ms/step - accuracy: 0.9734 - loss: 0.1777 - val_accuracy: 1.0000 - val_loss: 0.0610 - learning_rate: 5.0000e-04
+Restoring model weights from the end of the best epoch: 30.
+
+Best epoch by validation loss: 30
+Epoch training accuracy (dropout active): 0.9734
+Saved-model training accuracy: 1.0000
+Saved-model validation accuracy: 1.0000
+Inference accuracy gap: 0.0000
+Training time: 4.23 minutes
+These are internal results; they do not establish external generalization.
+              precision    recall  f1-score   support
+
+          AB     1.0000    1.0000    1.0000        30
+          BC     1.0000    1.0000    1.0000        27
+          AC     1.0000    1.0000    1.0000        29
+          AG     1.0000    1.0000    1.0000        28
+          BG     1.0000    1.0000    1.0000        30
+          CG     1.0000    1.0000    1.0000        30
+         ABG     1.0000    1.0000    1.0000        29
+         BCG     1.0000    1.0000    1.0000        28
+         ACG     1.0000    1.0000    1.0000        30
+         ABC     1.0000    1.0000    1.0000        27
+        ABCG     1.0000    1.0000    1.0000        32
+
+    accuracy                         1.0000       320
+   macro avg     1.0000    1.0000    1.0000       320
+weighted avg     1.0000    1.0000    1.0000       320
+
+Validation confusion matrix:
+ [[30  0  0  0  0  0  0  0  0  0  0]
+ [ 0 27  0  0  0  0  0  0  0  0  0]
+ [ 0  0 29  0  0  0  0  0  0  0  0]
+ [ 0  0  0 28  0  0  0  0  0  0  0]
+ [ 0  0  0  0 30  0  0  0  0  0  0]
+ [ 0  0  0  0  0 30  0  0  0  0  0]
+ [ 0  0  0  0  0  0 29  0  0  0  0]
+ [ 0  0  0  0  0  0  0 28  0  0  0]
+ [ 0  0  0  0  0  0  0  0 30  0  0]
+ [ 0  0  0  0  0  0  0  0  0 27  0]
+ [ 0  0  0  0  0  0  0  0  0  0 32]]
+Model: cnn_bilstm_runs/20260914_144935_0939b6/stable_3cnn_bilstm.keras
+Matching preprocessing: cnn_bilstm_runs/20260914_144935_0939b6/preprocessing.npz
+
+
+=== Source cell 6 ===
+train/val overlap: 0
+train/test overlap: 0
+X_train len: 1280 X_val len: 320
+
+
+=== Source cell 7 ===
+Test accuracy: 100.00%
+Balanced accuracy: 100.00%
+
+
+=== Source cell 7 ===
+<Figure size 900x700 with 1 Axes>
+
+=== Source cell 7 ===
+
+Misclassification Summary
+No incorrect predictions 🎉
+
+
+=== Source cell 9 ===
+Rejected 5/154 recordings. Details: external_validation_results/rejected_files.csv
+                                                          file         stage                                                                                                                                  reason
+Validation(Indika)/Fault_ABCG_Sample_16_Loc_130.8(Newline).mat normalization  Normalized peak=1.448873e+75, float32 limit=3.402823e+38. Inspect the recording and its physical units/bases; no clipping was applied.
+Validation(Indika)/Fault_ABCG_Sample_18_Loc_122.6(Newline).mat normalization  Normalized peak=1.303534e+53, float32 limit=3.402823e+38. Inspect the recording and its physical units/bases; no clipping was applied.
+Validation(Indika)/Fault_ABCG_Sample_19_Loc_142.8(Newline).mat normalization Normalized peak=1.546923e+109, float32 limit=3.402823e+38. Inspect the recording and its physical units/bases; no clipping was applied.
+Validation(Indika)/Fault_ABCG_Sample_20_Loc_127.6(Newline).mat normalization  Normalized peak=2.822488e+66, float32 limit=3.402823e+38. Inspect the recording and its physical units/bases; no clipping was applied.
+Validation(Indika)/Fault_ABCG_Sample_21_Loc_133.2(Newline).mat normalization  Normalized peak=6.077406e+81, float32 limit=3.402823e+38. Inspect the recording and its physical units/bases; no clipping was applied.
+MAT files found: 154; evaluated recordings: 149; auxiliary MAT files: 0
+Evaluation coverage: 149/154 (96.75%); rejected: 5
+Status  Evaluated  Rejected
+Class
+AB             10         0
+ABC            10         0
+ABCG           10         5
+ABG            14         0
+AC             14         0
+ACG            16         0
+AG             16         0
+BC             14         0
+BCG            15         0
+BG             17         0
+CG             13         0
+Model input per recording: (1201, 8); training reference: 0.200s at 6000 Hz
+original_samples  operation
+1201              relative length match    149
+Name: files, dtype: int64
+Timing fallback: 149/149 recordings mapped by relative position. Their complete signals are fitted to the model length; their physical timing is unavailable or ignored by policy. Scores below apply to this conversion.
+External normalized per-channel RMS: [8.49783461e-01 8.45530580e-01 8.44193690e-01 7.08465100e-01
+ 7.07592752e-01 7.22121456e-01 1.23219124e+01 2.15347802e-03]
+
+Accuracy on evaluated recordings (includes relative-position mapping): 51.68%
+Correct / all attempted recordings: 50.00% (rejected recordings counted as unsuccessful)
+Balanced accuracy (classes present): 54.55%
+Macro F1 (classes present): 0.4724
+              precision    recall  f1-score   support
+
+          AB     1.0000    1.0000    1.0000        10
+          BC     1.0000    1.0000    1.0000        14
+          AC     1.0000    1.0000    1.0000        14
+          AG     0.0000    0.0000    0.0000        16
+          BG     0.0000    0.0000    0.0000        17
+          CG     0.1733    1.0000    0.2955        13
+         ABG     0.0000    0.0000    0.0000        14
+         BCG     0.0000    0.0000    0.0000        15
+         ACG     1.0000    1.0000    1.0000        16
+         ABC     0.5000    0.8000    0.6154        10
+        ABCG     0.5000    0.2000    0.2857        10
+
+    accuracy                         0.5168       149
+   macro avg     0.4703    0.5455    0.4724       149
+weighted avg     0.4447    0.5168    0.4487       149
+
+
+
+=== Source cell 9 ===
+<Figure size 900x700 with 1 Axes>

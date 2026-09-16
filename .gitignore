@@ -1,0 +1,35 @@
+# Operating-system and editor files
+desktop.ini
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
+
+# Python environments and generated caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+
+# MATLAB temporary files
+*.asv
+*.m~
+*.slxc
+*.slx.autosave
+slprj/
+
+# Generated experiment data and artifacts: publish deliberately with manifests
+/data/raw/
+/data/processed/
+/checkpoints/
+/runs/
+/logs/
+cnn_bilstm_runs/
+external_validation_results/
