@@ -1,5 +1,7 @@
 # Power-System Fault Classification Using Deep Learning
 
+## [View the Project Portfolio →](https://sites.google.com/view/shakkya-gamage/home)
+
 Classifying simulated power-system faults from three-phase voltage and current waveforms using a **3-CNN + BiLSTM** network.
 
 This final-year electrical engineering project combines an IEEE 14-bus MATLAB/Simulink model, labelled waveform generation, and deep-learning experiments. Embedded relay integration is a project objective; field operation is not demonstrated here.
